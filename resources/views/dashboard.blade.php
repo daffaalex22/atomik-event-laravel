@@ -2,15 +2,74 @@
 
 @section('content')
 
-<section class="vh-100 overflow-hidden" style="background-image: url({{asset('img/Background.jpg')}}); background-color: #cccccc;">
-    <div class="align-items-center text-white flex-column my-auto">
-        <h1> Kreanesia </h1>
+<section>
+    <div class="container-fluid" style="background-image: url({{asset('img/Background.jpg')}}); background-color: #cccccc;">
+        <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="800">
+            <img src="{{ asset('img/Kreanesia2023.png')}}" class="h-50 w-50">
+        </div>
     </div>
 </section>
 
-<div class="container-fluid" style="background-color: #FFFF00;">
-    <div class="vh-100 overflow-hidden">
-        <h1> </h1>
+<!-- About Section-->
+<section class="page-section mb-0" id="about">
+    <div class="container">
+        <!-- About Section Heading-->
+        <h2 class="page-section-heading text-center" style="font-family:Century Gothic;color=#0B062E;"><strong>Tentang Kreanesia</strong></h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+
+        <!-- About Section Content-->
+        <div class="mx-auto"><p class="lead" style="font-family:Century Gothic;color=#0B062E;text-align:center;">Kreanesia merupakan pameran kewirausahaan mahasiswa SBM ITB baik jenjang sarjana maupun magister. Mahasiswa mendapatkan kesempatan untuk memamerkan produknya, bertemu dengan civitas, alumni, dan komunitas start-up.</p></div>
+
+        <!-- About Section Button-->
+        <div class="text-center mt-4">
+            <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
+                <i class="fas fa-download me-2"></i>
+                Free Download!
+            </a>
+        </div>
     </div>
+</section>
+
+<!-- Footer-->
+<footer class="footer text-center">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <!-- Footer Location-->
+            <div class="col-lg-4">
+                <h4 class="text-uppercase mb-4">Location</h4>
+                <p class="lead mb-0">
+                    MBA ITB
+                    <br />
+                    Jl. Gelap Nyawang No.1
+                    <br />
+                    Kota Bandung, Jawa Barat 40132
+                </p>
+            </div>
+            <!-- Footer About Text-->
+            <div class="col-lg-4">
+                <h4 class="text-uppercase mb-4">Contact</h4>
+                <i class="fab fa-fw fa-whatsapp"></i>
+                <p class="lead mb-0" style="display: inline-block;">0888-8888-8888</p>
+                <br />
+                <i class="fa fa-fw fa-envelope"></i>
+                <p class="lead mb-0" style="display: inline-block;">kreanesia@sbm-itb.ac.id</p>
+                <br />
+                <i class="fab fa-fw fa-instagram"></i>
+                <p class="lead mb-0" style="display: inline-block;">@kreanesia</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Copyright Section
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; Mochamad Haikal Ghiffari</small></div>
 </div>
+-->
+
 @endsection
