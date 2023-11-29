@@ -1,3 +1,24 @@
+<?php
+
+    $counter = 1;
+
+    $counter_file = public_path("counter.txt");
+    if (!file_exists($counter_file)) {
+        touch($counter_file);
+        $fp = fopen($counter_file, "r+");
+        fwrite($fp, 1);
+        fclose($fp);
+    } else {
+        $fp = fopen($counter_file, "r+");
+        $counter = intval(fread($fp, filesize($counter_file)));
+        fclose($fp);
+
+        $counter++;
+    }
+?>
+
+
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -67,5 +88,16 @@
                 @yield('content')
             </main>
         </div>
+
+        <div>
+            <p class="counter"> Visited {{ $counter }} times</p>
+        </div>
     </body>
 </html>
+
+
+<?php
+    $fp = fopen(public_path("counter.txt"), "w"); 
+    fwrite($fp, $counter);
+    fclose($fp); 
+?>
