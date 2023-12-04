@@ -16,6 +16,7 @@ class OrderCoupon extends Mailable
     public $name;
     public $email;
     public $coupon;
+    public $startCount;
 
     /**
      * Create a new message instance.
@@ -25,6 +26,7 @@ class OrderCoupon extends Mailable
         $this->name = $data["name"];
         $this->email = $data["email"];
         $this->coupon = $data["coupon"];
+        $this->startCount = $data["startCount"];
     }
 
     /**
