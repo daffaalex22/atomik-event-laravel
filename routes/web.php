@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\OrderCoupon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +21,19 @@ Route::get('/', function () {
 
 Route::get('/kupon', function () {
     return view('kupon');
+});
+
+Route::post('/kupon', function () { 
+
+    $data = [
+        "name"=> request("name"),
+        "email"=> request("email"),
+        "coupon"=> request("coupon"),
+    ];
+
+    Mail::to($data["email"])->send(new OrderCoupon($data));
+
+    return redirect('/kupon');
 });
 
 Route::get('/about', function () {
