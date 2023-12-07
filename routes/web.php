@@ -60,7 +60,3 @@ Route::post('/kupon', function () {
 
     return redirect('/kupon');
 });
-
-Route::get('/about', function () {
-    return view('about');
-});

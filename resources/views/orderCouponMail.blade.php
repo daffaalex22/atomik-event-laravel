@@ -1,3 +1,5 @@
+<!--Isi Message Email-->
+
 @component('mail::message')
 <h1>{{ $name }}, thank you for your order!</h1>
 <p>These are your coupon code(s) for Kreanesia event:</p>

@@ -76,9 +76,6 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ (request()->is('kupon')) ? 'active' : '' }}" href="/kupon"><span class="fas fa-receipt"></span> Kupon</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('about')) ? 'active' : '' }}" href="/about"><span class="fas fa-users"></span> About</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
