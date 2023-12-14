@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OrderCoupon;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+
 
 class KuponController extends Controller
 {
@@ -27,48 +29,14 @@ class KuponController extends Controller
         $data["first_name"] = substr($string, 0, $last_space);
         $data["last_name"] = substr($string, $last_space + 1);
     
-    
-        // Getting Counter Data
-        $counter = 1;
-        $counter_file = "./order-counter.txt";
-        if (!file_exists($counter_file)) {
-            touch($counter_file);
-            $fp = fopen($counter_file, "r+");
-            fwrite($fp, 1);
-            fclose($fp);
-        } else {
-            $fp = fopen($counter_file, "r+");
-            $counter = intval(fread($fp, filesize($counter_file)));
-            fclose($fp);
-        }
-    
-        $data["startCount"] = $counter;
-        // Sending Mail
-    
-        if (env('USE_MAILING') === 'true') {
-            Mail::to($data["email"])->send(new OrderCoupon($data));
-        }
-        
-    
-        // Update Counter Data
-        $counter = $counter + $data["coupon"];
-        
-        $fp = fopen($counter_file, "w"); 
-        fwrite($fp, $counter);
-        fclose($fp);
-    
-        // Midtrans Payment
-    
-        // Set your Merchant Server Key
-        \Midtrans\Config::$serverKey = 'SB-Mid-server-03XnJAZR--SJtcDSjace9Mpk';
-        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = false;
-        // Set sanitization on (default)
+        // Midtrans Get Snap Token
+        \Midtrans\Config::$serverKey = env("MIDTRANS_SERVER_KEY_SANDBOX");
+        \Midtrans\Config::$isProduction = env("IS_PRODUCTION") === "true";
         \Midtrans\Config::$isSanitized = true;
     
         $params = array(
             'transaction_details' => array(
-                'order_id' => $data["startCount"],
+                'order_id' => $data["email"] + Carbon::now()->timestamp,
                 'gross_amount' => $data["coupon"] * intval(env("COUPON_PRICE")),
             ),
             'customer_details' => array(
@@ -97,5 +65,42 @@ class KuponController extends Controller
             'snapToken'=> session()->get('snapToken') ?? "",
             'orderData' => session()->get('orderData') ?? $dummyOrderData,
         ]);
+    }
+
+    public function successOrder() {
+        $data = session()->get('orderData');
+
+        // Getting Counter Data
+        $counter = 1;
+        $counter_file = "./order-counter.txt";
+        if (!file_exists($counter_file)) {
+            touch($counter_file);
+            $fp = fopen($counter_file, "r+");
+            fwrite($fp, 1);
+            fclose($fp);
+        } else {
+            $fp = fopen($counter_file, "r+");
+            $counter = intval(fread($fp, filesize($counter_file)));
+            fclose($fp);
+        }
+    
+        $data["startCount"] = $counter;
+
+        // Sending Mail
+        if (env('USE_MAILING') === 'true') {
+            Mail::to($data["email"])->send(new OrderCoupon($data));
+        }
+            
+        // Update Counter Data
+        $counter_file = "./order-counter.txt";
+        $fp = fopen($counter_file, "w"); 
+
+        $counter += $data["coupon"];
+        fwrite($fp, $counter);
+        fclose($fp);
+
+        // FOrget session data
+        session()->flush();
+        return view('success');
     }
 }

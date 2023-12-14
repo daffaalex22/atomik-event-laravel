@@ -22,6 +22,4 @@ Route::get('/', function () {
 
 Route::get('/kupon', [KuponController::class,'index']);
 Route::post('/kupon', [KuponController::class,'order']);
-Route::get('/kupon/sukses', function () {
-    return view('success');
-});
+Route::get('/kupon/sukses', [KuponController::class,'successOrder']);
