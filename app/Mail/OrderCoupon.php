@@ -35,7 +35,7 @@ class OrderCoupon extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Kreanesia - Kode Kupon',
+            subject: 'Atomik - Kode Kupon',
         );
     }
 

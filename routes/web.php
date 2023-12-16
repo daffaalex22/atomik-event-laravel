@@ -4,6 +4,7 @@ use App\Http\Controllers\KuponController;
 use App\Mail\OrderCoupon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Console\Input;
 
 /*
 |--------------------------------------------------------------------------

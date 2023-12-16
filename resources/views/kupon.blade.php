@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <br>
 
-            <h1>Beli Kupon</h1>            
+            <h1>{{ $snapToken ? "Lakukan Pembayaran" : "Beli Kupon" }}</h1>            
 
             <br>
 
@@ -24,9 +24,7 @@
                         class="form-control"
                         placeholder="Masukkan nama kamu disini!"
                         value="{{ $orderData["name"] }}"
-                        @if ($snapToken)
-                            readonly
-                        @endif
+                        {{ $snapToken ? "readonly" : "" }}
                     ><br />
                 </div>
 
@@ -41,9 +39,7 @@
                         placeholder="Masukkan alamat email kamu yang aktif!"
                         aria-describedby="emailHelp"
                         value="{{ $orderData["email"] }}"
-                        @if ($snapToken)
-                            readonly
-                        @endif
+                        {{ $snapToken ? "readonly" : "" }}
                     >
                     <small id="emailHelp" class="form-text text-muted">*Kode kupon yang kamu beli akan dikirim via email</small><br />
                     <br>
@@ -59,27 +55,16 @@
                         class="form-control"
                         placeholder="Masukkan jumlah kupon yang akan kamu beli!"
                         value="{{ $orderData["coupon"] }}"
-                        @if ($snapToken)
-                            readonly
-                        @endif
+                        {{ $snapToken ? "readonly" : "" }}
                     ><br />
                 </div>
-                
-                @if (!$snapToken)
+
                 <input
                     name="button"
                     type="submit" 
-                    value="Beli Kupon"
-                    class="btn btn-primary"
+                    value="{{ $snapToken ? "Batal Beli" : "Beli Kupon" }}"
+                    class="btn {{ $snapToken ? "btn-danger" : "btn-primary" }}"
                 >
-                @else
-                <input
-                    name="button"
-                    type="submit" 
-                    value="Batal Beli"
-                    class="btn btn-danger"
-                >
-                @endif
             </form>
 
             <!-- Midtrans Snap -->

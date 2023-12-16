@@ -6,14 +6,15 @@
         <meta name="description" content="" />
         <meta name="author" content="Atomik" />
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <link rel="icon" href="{{ asset('img/atomik-black-transparent.png') }}">
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         @hasSection('title')
-            <title>Kreanesia - @yield('title')</title>
+            <title>Atomik - @yield('title')</title>
         @else
-            <title>Kreanesia</title>
+            <title>Atomik</title>
         @endif
         
         <!-- Fonts -->
@@ -44,7 +45,7 @@
             <nav class="navbar navbar-expand-lg shadow sticky-top" style="background-color: #FFFFFF;">
                 <div class="container-fluid">
                     <a class="navbar-brand px-4" href="/">
-                        <img src="{{ asset('img/KreanesiaOnlyDark.png')}}" width="120" height="40" class="d-inline-block align-bottom" alt="">
+                        <img src="{{ asset('img/atomik-transparent.png')}}" height="40" class="d-inline-block align-bottom" alt="">
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
