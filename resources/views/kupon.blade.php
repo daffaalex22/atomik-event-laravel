@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <br>
 
-            <h1>Beli Kupon</h1>
+            <h1>Beli Kupon</h1>            
 
             <br>
 
@@ -23,6 +23,10 @@
                         required
                         class="form-control"
                         placeholder="Masukkan nama kamu disini!"
+                        value="{{ $orderData["name"] }}"
+                        @if ($snapToken)
+                            readonly
+                        @endif
                     ><br />
                 </div>
 
@@ -36,6 +40,10 @@
                         class="form-control"
                         placeholder="Masukkan alamat email kamu yang aktif!"
                         aria-describedby="emailHelp"
+                        value="{{ $orderData["email"] }}"
+                        @if ($snapToken)
+                            readonly
+                        @endif
                     >
                     <small id="emailHelp" class="form-text text-muted">*Kode kupon yang kamu beli akan dikirim via email</small><br />
                     <br>
@@ -50,15 +58,42 @@
                         required
                         class="form-control"
                         placeholder="Masukkan jumlah kupon yang akan kamu beli!"
+                        value="{{ $orderData["coupon"] }}"
+                        @if ($snapToken)
+                            readonly
+                        @endif
                     ><br />
                 </div>
                 
-                <input 
+                @if (!$snapToken)
+                <input
+                    name="button"
                     type="submit" 
                     value="Beli Kupon"
                     class="btn btn-primary"
                 >
+                @else
+                <input
+                    name="button"
+                    type="submit" 
+                    value="Batal Beli"
+                    class="btn btn-danger"
+                >
+                @endif
             </form>
+
+            <!-- Midtrans Snap -->
+            <div id="snap-container" class="d-flex justify-content-center align-items-center my-5"></div>
+
+            <script type="text/javascript">
+                var snapToken = "{{ $snapToken }}";
+
+                if (snapToken) {
+                    window.snap.embed(snapToken, {
+                        embedId: 'snap-container'
+                    });
+                }
+            </script>
         </div>
     </div>
 </div>

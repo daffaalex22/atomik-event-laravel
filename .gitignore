@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 counter.txt
 order-counter.txt
+.vercel
