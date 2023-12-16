@@ -91,9 +91,7 @@ class KuponController extends Controller
         $data["startCount"] = $counter;
 
         // Sending Mail
-        if (env('USE_MAILING') === 'true') {
-            Mail::to($data["email"])->send(new OrderCoupon($data));
-        }
+        Mail::to($data["email"])->send(new OrderCoupon($data));
             
         // Update Counter Data
         // $counter_file = "./order-counter.txt";
