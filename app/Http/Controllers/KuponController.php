@@ -36,7 +36,7 @@ class KuponController extends Controller
     
         $params = array(
             'transaction_details' => array(
-                'order_id' => $data["email"] + Carbon::now()->timestamp,
+                'order_id' => $data["email"] . strval(Carbon::now()->timestamp),
                 'gross_amount' => $data["coupon"] * intval(env("COUPON_PRICE")),
             ),
             'customer_details' => array(
@@ -72,17 +72,21 @@ class KuponController extends Controller
 
         // Getting Counter Data
         $counter = 1;
-        $counter_file = "./order-counter.txt";
-        if (!file_exists($counter_file)) {
-            touch($counter_file);
-            $fp = fopen($counter_file, "r+");
-            fwrite($fp, 1);
-            fclose($fp);
-        } else {
-            $fp = fopen($counter_file, "r+");
-            $counter = intval(fread($fp, filesize($counter_file)));
-            fclose($fp);
-        }
+
+        // Writing to a file is considered anti pattern
+        // Next Step is to add SQL Database
+
+        // $counter_file = "./order-counter.txt";
+        // if (!file_exists($counter_file)) {
+        //     touch($counter_file);
+        //     $fp = fopen($counter_file, "r+");
+        //     fwrite($fp, 1);
+        //     fclose($fp);
+        // } else {
+        //     $fp = fopen($counter_file, "r+");
+        //     $counter = intval(fread($fp, filesize($counter_file)));
+        //     fclose($fp);
+        // }
     
         $data["startCount"] = $counter;
 
@@ -92,12 +96,12 @@ class KuponController extends Controller
         }
             
         // Update Counter Data
-        $counter_file = "./order-counter.txt";
-        $fp = fopen($counter_file, "w"); 
+        // $counter_file = "./order-counter.txt";
+        // $fp = fopen($counter_file, "w"); 
 
-        $counter += $data["coupon"];
-        fwrite($fp, $counter);
-        fclose($fp);
+        // $counter += $data["coupon"];
+        // fwrite($fp, $counter);
+        // fclose($fp);
 
         // FOrget session data
         session()->flush();

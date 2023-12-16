@@ -1,31 +1,11 @@
-<?php
-
-    $counter = 1;
-
-    $counter_file = public_path("counter.txt");
-    if (!file_exists($counter_file)) {
-        touch($counter_file);
-        $fp = fopen($counter_file, "r+");
-        fwrite($fp, 1);
-        fclose($fp);
-    } else {
-        $fp = fopen($counter_file, "r+");
-        $counter = intval(fread($fp, filesize($counter_file)));
-        fclose($fp);
-
-        $counter++;
-    }
-?>
-
-
-
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
-        <meta name="author" content="Mochamad Haikal Ghiffari" />
+        <meta name="author" content="Atomik" />
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -88,16 +68,5 @@
                 @yield('content')
             </main>
         </div>
-
-        <div>
-            <p class="counter"> Visited {{ $counter }} times</p>
-        </div>
     </body>
 </html>
-
-
-<?php
-    $fp = fopen(public_path("counter.txt"), "w"); 
-    fwrite($fp, $counter);
-    fclose($fp); 
-?>
