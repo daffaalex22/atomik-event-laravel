@@ -24,3 +24,4 @@ Route::get('/', function () {
 Route::get('/kupon', [KuponController::class,'index']);
 Route::post('/kupon', [KuponController::class,'order']);
 Route::get('/kupon/sukses', [KuponController::class,'successOrder']);
+Route::post('/kupon/email', [KuponController::class,'mailCode']);

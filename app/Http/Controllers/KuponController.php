@@ -68,41 +68,39 @@ class KuponController extends Controller
     }
 
     public function successOrder() {
-        $data = session()->get('orderData');
+        return view('success');
+    }
 
-        // Getting Counter Data
-        $counter = 1;
+    public function mailCode() {
+        $transactionStatus = request('transaction_status');
+        $fraudStatus = request('fraud_status');
 
-        // Writing to a file is considered anti pattern
-        // Next Step is to add SQL Database
+        if (
+            $transactionStatus != 'capture' ||
+            $transactionStatus != 'settlement' ||
+            $fraudStatus != 'accept'
+        ) {
+            return;
+        }
+        
+        $orderId = request('order_id');
 
-        // $counter_file = "./order-counter.txt";
-        // if (!file_exists($counter_file)) {
-        //     touch($counter_file);
-        //     $fp = fopen($counter_file, "r+");
-        //     fwrite($fp, 1);
-        //     fclose($fp);
-        // } else {
-        //     $fp = fopen($counter_file, "r+");
-        //     $counter = intval(fread($fp, filesize($counter_file)));
-        //     fclose($fp);
-        // }
-    
-        $data["startCount"] = $counter;
+        // In a realistic scenario, these data will be 
+        // obtained from a database
+        $data = [
+            'name'=> 'Buyer',
+            'email'=> $this->extractEmail($orderId),
+            'coupon'=> 3,
+        ];
 
         // Sending Mail
         Mail::to($data["email"])->send(new OrderCoupon($data));
-            
-        // Update Counter Data
-        // $counter_file = "./order-counter.txt";
-        // $fp = fopen($counter_file, "w"); 
+    }
 
-        // $counter += $data["coupon"];
-        // fwrite($fp, $counter);
-        // fclose($fp);
+    private function extractEmail($orderId) {
+        preg_match_all("/[a-z0-9_\-\+\.]+@[a-z0-9\-]+\.([a-z]{2,4})(?:\.[a-z]{2})?/i", $orderId, $matches);
+        $email = $matches[0][0];
 
-        // FOrget session data
-        session()->flush();
-        return view('success');
+        return $email;
     }
 }
