@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\OrderCoupon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -76,11 +77,13 @@ class KuponController extends Controller
         $fraudStatus = request('fraud_status');
 
         if (
-            $transactionStatus != 'capture' ||
+            $transactionStatus != 'capture' &&
             $transactionStatus != 'settlement' ||
             $fraudStatus != 'accept'
         ) {
-            return;
+            return Response::json([
+                'status' => "PAYMENT_REQUIRED"
+            ], 402);
         }
         
         $orderId = request('order_id');
@@ -95,6 +98,10 @@ class KuponController extends Controller
 
         // Sending Mail
         Mail::to($data["email"])->send(new OrderCoupon($data));
+
+        return Response::json([
+            'status' => "SUCCESS"
+        ], 200);
     }
 
     private function extractEmail($orderId) {
