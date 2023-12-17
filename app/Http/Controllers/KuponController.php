@@ -71,7 +71,6 @@ class KuponController extends Controller
     }
 
     public function mailCode() {
-        error_log("MASUK_CONTROLLER");
         $transactionStatus = request('transaction_status');
         $fraudStatus = request('fraud_status');
 
