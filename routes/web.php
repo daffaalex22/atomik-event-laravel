@@ -21,7 +21,8 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
-Route::get('/kupon', [KuponController::class,'index']);
-Route::post('/kupon', [KuponController::class,'order']);
+
 Route::get('/kupon/sukses', [KuponController::class,'successOrder']);
 Route::post('/kupon/email', [KuponController::class,'mailCode']);
+Route::get('/kupon', [KuponController::class,'index']);
+Route::post('/kupon', [KuponController::class,'order']);

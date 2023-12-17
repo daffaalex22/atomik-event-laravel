@@ -7,7 +7,7 @@
 <?php for ($i = $startCount; $i < $startCount + $coupon; $i++) { ?>  
 <div class="coupon-card">
     <div class="coupon-container">
-        <h4><b><i>Kreasia-{{ $i }}</i></b></h4>
+        <h4><b><i>ATOMIK-{{ $i }}</i></b></h4>
     </div>
 </div>
 <br /> 

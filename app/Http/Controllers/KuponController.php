@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderCoupon;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -73,6 +71,7 @@ class KuponController extends Controller
     }
 
     public function mailCode() {
+        error_log("MASUK_CONTROLLER");
         $transactionStatus = request('transaction_status');
         $fraudStatus = request('fraud_status');
 
@@ -81,7 +80,7 @@ class KuponController extends Controller
             $transactionStatus != 'settlement' ||
             $fraudStatus != 'accept'
         ) {
-            return Response::json([
+            return response()->json([
                 'status' => "PAYMENT_REQUIRED"
             ], 402);
         }
@@ -94,12 +93,13 @@ class KuponController extends Controller
             'name'=> 'Buyer',
             'email'=> $this->extractEmail($orderId),
             'coupon'=> 3,
+            'startCount' => 1
         ];
 
         // Sending Mail
         Mail::to($data["email"])->send(new OrderCoupon($data));
 
-        return Response::json([
+        return response()->json([
             'status' => "SUCCESS"
         ], 200);
     }
